@@ -23,4 +23,4 @@ COPY . .
 RUN kaggle datasets download -d gpiosenka/100-bird-species -p /usr/src/app/data --unzip
 
 # Command to dowload it using python
-# CMD ["python", "src/download_data.py"]
+# CMD ["python", "src/download_data.py", "gpiosenka/100-bird-species"]
