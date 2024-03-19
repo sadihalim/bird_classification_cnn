@@ -8,3 +8,6 @@ cp -r ../data ./data
 
 ## Train
 sudo unzip ./data/100-bird-species.zip -d ./datadata/
+
+docker build -t bird-classification .
+docker run bird-classification
