@@ -4,7 +4,3 @@ docker run -v $(pwd)/data:/data -e KAGGLE_USERNAME=$KAGGLE_USERNAME -e KAGGLE_KE
 
 git checkout -b train
 cp -r ../data ./data
-
-
-
-
