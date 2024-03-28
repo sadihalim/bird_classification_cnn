@@ -4,6 +4,7 @@ from model import build_model, get_callbacks
 from train import train
 from evaluate import evaluate
 
+
 def main():
     """
     Main function to prepare dataframes, load the data, train the model, and evaluate it on the test set.

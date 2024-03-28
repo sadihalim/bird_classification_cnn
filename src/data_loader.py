@@ -19,9 +19,7 @@ def prepare_dataframes(dataset: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
     Returns:
         Tuple[pd.DataFrame, pd.DataFrame]: Dataframes for the training and validation datasets.
     """
-    
-    
-    dataset = "../input/100-bird-species/train"
+
     walk_through_dir(dataset)
     image_dir = Path(dataset)
 
@@ -36,9 +34,13 @@ def prepare_dataframes(dataset: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
     image_df = pd.concat([filepaths, labels], axis=1)
 
     # Split into train and test dataframes
-    train_df, test_df = train_test_split(image_df, test_size=0.2, shuffle=True, random_state=42)
+    train_df, test_df = train_test_split(image_df,
+                                         test_size=0.2,
+                                         shuffle=True,
+                                         random_state=42)
 
     return train_df, test_df
+
 
 def load_data(train_df: pd.DataFrame, test_df: pd.DataFrame, img_height: int = 224, img_width: int = 224, batch_size: int = 32) -> Tuple[DirectoryIterator, DirectoryIterator]:
     """
@@ -54,11 +56,12 @@ def load_data(train_df: pd.DataFrame, test_df: pd.DataFrame, img_height: int = 2
     Returns:
         Tuple[DirectoryIterator, DirectoryIterator]: Training and test data generators.
     """
-    # Data augmentation and preprocessing
-    augment = data_augmentation()
 
     # Training data generator
-    train_datagen = ImageDataGenerator(preprocessing_function=augment)
+    train_datagen = ImageDataGenerator(
+        preprocessing_function=tf.keras.applications.efficientnet.preprocess_input,
+        validation_split=0.2
+        )
     train_data = train_datagen.flow_from_dataframe(
         dataframe=train_df,
         x_col='Filepath',
@@ -69,7 +72,9 @@ def load_data(train_df: pd.DataFrame, test_df: pd.DataFrame, img_height: int = 2
     )
 
     # Test data generator
-    test_datagen = ImageDataGenerator(preprocessing_function=augment)
+    test_datagen = ImageDataGenerator(
+        preprocessing_function=tf.keras.applications.efficientnet.preprocess_input,
+    )
     test_data = test_datagen.flow_from_dataframe(
         dataframe=test_df,
         x_col='Filepath',
