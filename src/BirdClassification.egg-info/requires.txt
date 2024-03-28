@@ -1,7 +1,0 @@
-numpy
-pandas
-tensorflow
-mlflow
-keras
-keras-preprocessing
-scikit-learn
