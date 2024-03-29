@@ -1,8 +1,8 @@
 import os
-from data_loader import prepare_dataframes, load_data
-from model import build_model, get_callbacks
-from train import train
-from evaluate import evaluate
+from src.data_loader import prepare_dataframes, load_data
+from src.model import build_model, get_callbacks
+from src.train import train
+from src.evaluate import evaluate
 
 
 def main():

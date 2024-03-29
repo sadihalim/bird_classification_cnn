@@ -1,8 +1,9 @@
 import mlflow
 import mlflow.keras
 import os
-from data_loader import load_data
+from data_loader import load_data, prepare_dataframes
 from model import build_model, get_callbacks
+from tensorflow.keras.optimizers import Adam
 
 def train() -> None:
     """
@@ -24,32 +25,41 @@ def train() -> None:
     # Load the data
     train_dir = os.path.join('data', 'train')
     test_dir = os.path.join('data', 'test')
-    train_data, val_data, test_data = load_data(train_dir, test_dir)
+    train_data, test_data = prepare_dataframes(train_dir)
 
+    train_df, test_df = load_data(train_data,test_data)
     # Build the model
     model = build_model(num_classes=525)
+    optimizer = Adam(0.0001)
+    model.compile(optimizer=optimizer,
+                  loss='categorical_crossentropy',
+                  metrics=['accuracy'])
 
     # Define training parameters
-    epochs = 10
+    epochs = 150
     batch_size = 32
 
     # Start an MLflow run
-    with mlflow.start_run():
+    with mlflow.start_run() as run:
+        # Log parameters
+        mlflow.log_params({"epochs": epochs, "batch_size": batch_size, "optimizer": type(optimizer).__name__})
+
+        
         # Train the model
         history = model.fit(
-            train_data,
-            validation_data=val_data,
+            train_df,
             epochs=epochs,
-            callbacks=get_callbacks(),
+            callbacks=get_callbacks(),  # assuming get_callbacks returns the required callbacks
             verbose=1
         )
 
         # Evaluate the model on the test set
-        test_loss, test_accuracy = model.evaluate(test_data)
+        test_loss, test_accuracy = model.evaluate(test_df)
 
-        # Log parameters, metrics, and the model
-        mlflow.log_params({"epochs": epochs, "batch_size": batch_size})
+        # Log metrics
         mlflow.log_metrics({"test_loss": test_loss, "test_accuracy": test_accuracy})
+
+        # Log the model
         mlflow.keras.log_model(model, "model")
 
         # Save the trained model for later inference
@@ -58,3 +68,6 @@ def train() -> None:
         print(f"Model saved to {model_save_path}")
 
         print(f"Test Loss: {test_loss}, Test Accuracy: {test_accuracy}")
+
+
+train()
