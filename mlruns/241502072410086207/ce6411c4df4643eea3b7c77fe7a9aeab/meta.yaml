@@ -1,0 +1,15 @@
+artifact_uri: file:///home/student/bird_classification_cnn/mlruns/241502072410086207/ce6411c4df4643eea3b7c77fe7a9aeab/artifacts
+end_time: 1711763365384
+entry_point_name: ''
+experiment_id: '241502072410086207'
+lifecycle_stage: active
+run_id: ce6411c4df4643eea3b7c77fe7a9aeab
+run_name: delightful-snail-604
+run_uuid: ce6411c4df4643eea3b7c77fe7a9aeab
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1711763365380
+status: 4
+tags: []
+user_id: student

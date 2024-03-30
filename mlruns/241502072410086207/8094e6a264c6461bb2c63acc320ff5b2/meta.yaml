@@ -1,0 +1,15 @@
+artifact_uri: file:///home/student/bird_classification_cnn/mlruns/241502072410086207/8094e6a264c6461bb2c63acc320ff5b2/artifacts
+end_time: 1711763265318
+entry_point_name: ''
+experiment_id: '241502072410086207'
+lifecycle_stage: active
+run_id: 8094e6a264c6461bb2c63acc320ff5b2
+run_name: abundant-elk-920
+run_uuid: 8094e6a264c6461bb2c63acc320ff5b2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1711763265313
+status: 4
+tags: []
+user_id: student

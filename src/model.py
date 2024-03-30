@@ -74,9 +74,9 @@ def get_callbacks() -> list:
         list: A list of callbacks including ModelCheckpoint, EarlyStopping, and ReduceLROnPlateau.
     """
     # Create checkpoint callback
-    checkpoint_path = "birds_classification_model_checkpoint"
+    checkpoint_path = "birds_classification_model_checkpoint.keras"
     checkpoint_callback = ModelCheckpoint(checkpoint_path,
-                                          save_weights_only=True,
+                                          save_weights_only=False,
                                           monitor="val_accuracy",
                                           save_best_only=True)
 

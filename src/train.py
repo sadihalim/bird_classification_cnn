@@ -25,9 +25,10 @@ def train() -> None:
     # Load the data
     train_dir = os.path.join('data', 'train')
     test_dir = os.path.join('data', 'test')
-    train_data, test_data = prepare_dataframes(train_dir)
+    train_df, test_df = prepare_dataframes(os.path.join('data', 'train'))  # Adjust path as needed
 
-    train_df, test_df = load_data(train_data,test_data)
+    # Load the data
+    train_data, test_data = load_data(train_df, test_df)
     # Build the model
     model = build_model(num_classes=525)
     optimizer = Adam(0.0001)
@@ -47,14 +48,14 @@ def train() -> None:
         
         # Train the model
         history = model.fit(
-            train_df,
+            train_data,
             epochs=epochs,
             callbacks=get_callbacks(),  # assuming get_callbacks returns the required callbacks
             verbose=1
         )
 
         # Evaluate the model on the test set
-        test_loss, test_accuracy = model.evaluate(test_df)
+        test_loss, test_accuracy = model.evaluate(test_data)
 
         # Log metrics
         mlflow.log_metrics({"test_loss": test_loss, "test_accuracy": test_accuracy})
